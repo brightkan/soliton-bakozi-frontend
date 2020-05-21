@@ -1,6 +1,8 @@
 import AuthForm, { STATE_LOGIN } from 'components/AuthForm';
+import bgImage from 'assets/img/bg/solitonbg.png';
 import React from 'react';
 import { Card, Col, Row } from 'reactstrap';
+
 
 class AuthPage extends React.Component {
   handleAuthState = authState => {
@@ -22,7 +24,10 @@ class AuthPage extends React.Component {
           height: '100vh',
           justifyContent: 'center',
           alignItems: 'center',
-        }}>
+          backgroundImage: `url(${bgImage})`,
+          backgroundSize: 'cover',
+        }}
+      >
         <Col md={6} lg={4}>
           <Card body>
             <AuthForm
