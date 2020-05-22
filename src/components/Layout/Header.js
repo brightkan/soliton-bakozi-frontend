@@ -5,6 +5,7 @@ import SearchInput from 'components/SearchInput';
 import { notificationsData } from 'demos/header';
 import withBadge from 'hocs/withBadge';
 import React from 'react';
+import {Link} from 'react-router-dom'
 import {
   MdClearAll,
   MdExitToApp,
@@ -157,7 +158,7 @@ class Header extends React.Component {
                       <MdHelp /> Help
                     </ListGroupItem>
                     <ListGroupItem tag="button" action className="border-light">
-                      <MdExitToApp /> Signout
+                     <Link to="/logout"><MdExitToApp /> Logout</Link>
                     </ListGroupItem>
                   </ListGroup>
                 </UserCard>
