@@ -1,4 +1,4 @@
-import AuthForm, { STATE_LOGIN } from 'components/AuthForm';
+import AuthForm from 'components/AuthForm';
 import Page from 'components/Page';
 import React from 'react';
 import {
@@ -15,7 +15,7 @@ import {
 class AuthModalPage extends React.Component {
   state = {
     show: false,
-    authState: STATE_LOGIN,
+    authState: "LOGIN",
   };
 
   toggle = () => {

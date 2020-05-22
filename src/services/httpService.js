@@ -1,4 +1,7 @@
 import axios from "axios";
+import {getJWT} from "./authService"
+
+axios.defaults.headers.common["Authorization"] = `Bearer ${getJWT()}`;
 
 axios.interceptors.response.use(null, error => {
   const expectedError =

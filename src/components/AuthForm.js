@@ -1,123 +1,133 @@
 import logo200Image from 'assets/img/logo/logo.png';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
+import { Button, Form, FormGroup, Input, Label , Alert} from 'reactstrap';
+import {login} from '../services/authService'
+
+import SimpleReactValidator from 'simple-react-validator';
 
 class AuthForm extends React.Component {
-  get isLogin() {
-    return this.props.authState === STATE_LOGIN;
+
+  state = {
+    account: {
+      email: "",
+      password: ""
+    },
+    errors: {},
+    alertVisible: true
   }
 
-  get isSignup() {
-    return this.props.authState === STATE_SIGNUP;
+
+
+  componentWillMount() {
+    this.validator = new SimpleReactValidator({
+      messages: {
+        email: 'That is not a valid soliton email.'
+      }})
   }
 
-  changeAuthState = authState => event => {
+
+  handleSubmit = async event => {
     event.preventDefault();
-
-    this.props.onChangeAuthState(authState);
+    await this.doSubmit();
   };
 
-  handleSubmit = event => {
-    event.preventDefault();
+  handleChange = ({ currentTarget: input }) => {
+    const account = { ...this.state.account };
+    const { name, value } = input;
+    account[name] = value;
+    this.setState({ account });
   };
 
-  renderButtonText() {
-    const { buttonText } = this.props;
-
-    if (!buttonText && this.isLogin) {
-      return 'Login';
+  doSubmit = async () => {
+    try {
+      const { email, password } = this.state.account;
+      const {data} = await login(email, password);
+      const { access } = data;
+      localStorage.setItem("token", access);
+      window.location = "/";
+    } catch (ex) {
+      if (ex.response && ex.response.status === 400) {
+        const errors = { ...this.state.errors };
+        errors.loginError = ex.response.data;
+        this.setState({errors, alertVisible: true})
+      }
     }
+  };
 
-    if (!buttonText && this.isSignup) {
-      return 'Signup';
-    }
+  onDismissAlert = () => this.setState({alertVisible: false})
 
-    return buttonText;
-  }
 
   render() {
     const {
       showLogo,
-      usernameLabel,
-      usernameInputProps,
+      emailLabel,
+      emailInputProps,
       passwordLabel,
       passwordInputProps,
-      confirmPasswordLabel,
-      confirmPasswordInputProps,
       children,
       onLogoClick,
     } = this.props;
 
+    const { loginError } = this.state.errors;
     return (
-      <Form onSubmit={this.handleSubmit}>
-        {showLogo && (
-          <div className="text-center pb-4">
-            <img
-              src={logo200Image}
-              className="rounded"
-              style={{ width: 200, height: 200, cursor: 'pointer' }}
-              alt="logo"
-              onClick={onLogoClick}
-            />
-          </div>
-        )}
-        <FormGroup>
-          <Label for={usernameLabel}>{usernameLabel}</Label>
-          <Input {...usernameInputProps} />
-        </FormGroup>
-        <FormGroup>
-          <Label for={passwordLabel}>{passwordLabel}</Label>
-          <Input {...passwordInputProps} />
-        </FormGroup>
-        {this.isSignup && (
+      <>
+        <Form onSubmit={this.handleSubmit}>
+          {showLogo && (
+            <div className="text-center pb-4">
+              <img
+                src={logo200Image}
+                className="rounded"
+                style={{ width: 200, height: 200, cursor: 'pointer' }}
+                alt="logo"
+                onClick={onLogoClick}
+              />
+              <h3>Soliton Bakozi</h3>
+            </div>
+          )}
+          {loginError && (
+            <Alert color="danger" isOpen={this.state.alertVisible} toggle={this.onDismissAlert} >
+              Invalid Credentials
+            </Alert>
+          )}
           <FormGroup>
-            <Label for={confirmPasswordLabel}>{confirmPasswordLabel}</Label>
-            <Input {...confirmPasswordInputProps} />
+            <Label for={emailLabel}>{emailLabel}</Label>
+            <Input {...emailInputProps} value={this.state.email} onChange={this.handleChange} onBlur={() => this.validator.showMessageFor('email')}/>
+
           </FormGroup>
-        )}
-        <FormGroup check>
-          <Label check>
-            <Input type="checkbox" />{' '}
-            {this.isSignup ? 'Agree the terms and policy' : 'Remember me'}
-          </Label>
-        </FormGroup>
-        <hr />
-        <Button
-          size="lg"
-          className="bg-gradient-theme-left border-0"
-          block
-          onClick={this.handleSubmit}
-        >
-          {this.renderButtonText()}
-        </Button>
+          <FormGroup>
+            <Label for={passwordLabel}>{passwordLabel}</Label>
+            <Input {...passwordInputProps} value={this.state.password} onChange={this.handleChange} />
 
-        <div className="text-center pt-1">
-          <h6>or</h6>
-          <h6>
-            {this.isSignup ? (
-              <a href="#login" onClick={this.changeAuthState(STATE_LOGIN)}>
-                Login
-              </a>
-            ) : (
-              <a href="#signup" onClick={this.changeAuthState(STATE_SIGNUP)}>
-                Signup
-              </a>
-            )}
-          </h6>
-        </div>
+          </FormGroup>
+          <hr />
+          <Button
+            size="lg"
+            className="bg-gradient-theme-left border-0"
+            block
+            onClick={this.handleSubmit}
+          >
+            LOGIN
+          </Button>
 
-        {children}
-      </Form>
-    );
+          <div className="text-center pt-1">
+            <h6>or</h6>
+            <h6>
+              <a href="#login" >
+                Forgot Password
+              </a>
+
+            </h6>
+          </div>
+          {children}
+        </Form>
+      </>)
+      ;
   }
 }
 
-export const STATE_LOGIN = 'LOGIN';
-export const STATE_SIGNUP = 'SIGNUP';
 
 AuthForm.propTypes = {
-  authState: PropTypes.oneOf([STATE_LOGIN, STATE_SIGNUP]).isRequired,
   showLogo: PropTypes.bool,
   usernameLabel: PropTypes.string,
   usernameInputProps: PropTypes.object,
@@ -131,20 +141,17 @@ AuthForm.propTypes = {
 AuthForm.defaultProps = {
   authState: 'LOGIN',
   showLogo: true,
-  usernameLabel: 'Email',
-  usernameInputProps: {
+  emailLabel: 'Email',
+  emailInputProps: {
     type: 'email',
-    placeholder: 'your@email.com',
+    placeholder: 'your@soliton.co.ug',
+    name:'email'
   },
   passwordLabel: 'Password',
   passwordInputProps: {
     type: 'password',
     placeholder: 'your password',
-  },
-  confirmPasswordLabel: 'Confirm Password',
-  confirmPasswordInputProps: {
-    type: 'password',
-    placeholder: 'confirm your password',
+    name: 'password',
   },
   onLogoClick: () => {},
 };
