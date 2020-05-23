@@ -2,12 +2,15 @@
 import GAListener from 'components/GAListener';
 import { EmptyLayout, LayoutRoute, MainLayout } from 'components/Layout';
 import PageSpinner from 'components/PageSpinner';
-import AuthPage from 'pages/AuthPage';
+import LoginPage from './pages/LoginPage';
 import React from 'react';
 import componentQueries from 'react-component-queries';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import './styles/reduction.scss';
 import Logout from './components/Logout';
+import ForgotPasswordPage from './pages/ForgotPasswordPage'
+import PasswordResetPage from './pages/PasswordResetPage'
+
 
 const AlertPage = React.lazy(() => import('pages/AlertPage'));
 const AuthModalPage = React.lazy(() => import('pages/AuthModalPage'));
@@ -42,15 +45,24 @@ class App extends React.Component {
               path="/login"
               layout={EmptyLayout}
               component={props => (
-                <AuthPage {...props}/>
+                <LoginPage {...props}/>
               )}
             />
             <LayoutRoute
               exact
-              path="/signup"
+              path="/forgot_password"
               layout={EmptyLayout}
               component={props => (
-                <AuthPage {...props}/>
+                <ForgotPasswordPage {...props}/>
+              )}
+            />
+
+            <LayoutRoute
+              exact
+              path="/password_reset"
+              layout={EmptyLayout}
+              component={props => (
+                <PasswordResetPage {...props}/>
               )}
             />
 

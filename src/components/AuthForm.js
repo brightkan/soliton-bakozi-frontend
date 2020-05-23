@@ -3,45 +3,22 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Button, Form, FormGroup, Input, Label , Alert} from 'reactstrap';
 import {login} from '../services/authService'
+import {Link} from 'react-router-dom'
 
-import SimpleReactValidator from 'simple-react-validator';
+import {Formik} from 'formik';
+import  * as Yup from 'yup'
+
 
 class AuthForm extends React.Component {
 
   state = {
-    account: {
-      email: "",
-      password: ""
-    },
     errors: {},
     alertVisible: true
   }
 
-
-
-  componentWillMount() {
-    this.validator = new SimpleReactValidator({
-      messages: {
-        email: 'That is not a valid soliton email.'
-      }})
-  }
-
-
-  handleSubmit = async event => {
-    event.preventDefault();
-    await this.doSubmit();
-  };
-
-  handleChange = ({ currentTarget: input }) => {
-    const account = { ...this.state.account };
-    const { name, value } = input;
-    account[name] = value;
-    this.setState({ account });
-  };
-
-  doSubmit = async () => {
+  doSubmit = async (values) => {
     try {
-      const { email, password } = this.state.account;
+      const { email, password } = values;
       const {data} = await login(email, password);
       const { access } = data;
       localStorage.setItem("token", access);
@@ -58,6 +35,8 @@ class AuthForm extends React.Component {
   onDismissAlert = () => this.setState({alertVisible: false})
 
 
+
+
   render() {
     const {
       showLogo,
@@ -71,58 +50,95 @@ class AuthForm extends React.Component {
 
     const { loginError } = this.state.errors;
     return (
-      <>
-        <Form onSubmit={this.handleSubmit}>
-          {showLogo && (
-            <div className="text-center pb-4">
-              <img
-                src={logo200Image}
-                className="rounded"
-                style={{ width: 200, height: 200, cursor: 'pointer' }}
-                alt="logo"
-                onClick={onLogoClick}
+      <Formik
+        initialValues={{email:"",password:""}}
+        onSubmit={async (values,{setSubmitting}) =>{await this.doSubmit(values)}}
+        validationSchema={ Yup.object().shape({
+          email: Yup.string().email("Must be a valid email").required("Email is required"),
+          password: Yup.string().required("Password is required")
+            .min(8, "Password is too short - Should be 8 characters minimum")
+        })}
+      >
+        {props =>{
+          const {
+            values,
+            touched,
+            errors,
+            handleChange,
+            isSubmitting,
+            handleBlur,
+            handleSubmit
+          } = props
+
+          return (<Form onSubmit={handleSubmit}>
+            {showLogo && (
+              <div className="text-center pb-4">
+                <img
+                  src={logo200Image}
+                  className="rounded"
+                  style={{ width: 200, height: 200, cursor: 'pointer' }}
+                  alt="logo"
+                  onClick={onLogoClick}
+                />
+                <h3>Soliton Bakozi</h3>
+              </div>
+            )}
+            {loginError && (
+              <Alert color="danger" isOpen={this.state.alertVisible} ontoggle={this.onDismissAlert} >
+                Invalid Credentials
+              </Alert>
+            )}
+            <FormGroup>
+              <Label for={emailLabel}>{emailLabel}</Label>
+              <Input
+                {...emailInputProps}
+                value={values.email}
+                onBlur={handleBlur}
+                onChange={handleChange}
+                style={errors.email&&inputErrorStyle}
               />
-              <h3>Soliton Bakozi</h3>
+              {errors.email && touched.email && (<div style={textError} >
+                {errors.email}
+              </div>)}
+
+            </FormGroup>
+            <FormGroup>
+              <Label for={passwordLabel}>{passwordLabel}</Label>
+              <Input {...passwordInputProps}
+                     value={values.password}
+                     onBlur={handleBlur}
+                     onChange={handleChange}
+                     style={errors.password&&inputErrorStyle} />
+              {errors.password && touched.password && (<div style={textError}>
+                {errors.password}
+              </div>)}
+
+            </FormGroup>
+            <hr />
+            <Button
+              size="lg"
+              className="bg-gradient-theme-left border-0"
+              block
+              onClick={handleSubmit}
+              disabled={isSubmitting}
+            >
+              LOGIN
+            </Button>
+
+            <div className="text-center pt-1">
+              <h6>or</h6>
+              <h6>
+                <Link to='/forgot_password' >
+                  Forgot Password
+                </Link>
+
+              </h6>
             </div>
-          )}
-          {loginError && (
-            <Alert color="danger" isOpen={this.state.alertVisible} toggle={this.onDismissAlert} >
-              Invalid Credentials
-            </Alert>
-          )}
-          <FormGroup>
-            <Label for={emailLabel}>{emailLabel}</Label>
-            <Input {...emailInputProps} value={this.state.email} onChange={this.handleChange} onBlur={() => this.validator.showMessageFor('email')}/>
+            {children}
+          </Form>)
+        }}
 
-          </FormGroup>
-          <FormGroup>
-            <Label for={passwordLabel}>{passwordLabel}</Label>
-            <Input {...passwordInputProps} value={this.state.password} onChange={this.handleChange} />
-
-          </FormGroup>
-          <hr />
-          <Button
-            size="lg"
-            className="bg-gradient-theme-left border-0"
-            block
-            onClick={this.handleSubmit}
-          >
-            LOGIN
-          </Button>
-
-          <div className="text-center pt-1">
-            <h6>or</h6>
-            <h6>
-              <a href="#login" >
-                Forgot Password
-              </a>
-
-            </h6>
-          </div>
-          {children}
-        </Form>
-      </>)
-      ;
+      </Formik>)
   }
 }
 
@@ -155,5 +171,13 @@ AuthForm.defaultProps = {
   },
   onLogoClick: () => {},
 };
+
+const inputErrorStyle = {
+  borderColor: "red"
+}
+const textError = {
+  color:"red"
+}
+
 
 export default AuthForm;
