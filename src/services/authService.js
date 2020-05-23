@@ -3,12 +3,11 @@ import { apiUrl } from "../config.json";
 import jwtDecode from "jwt-decode"
 
 const apiEndpoint = apiUrl + "/api/token/";
+const tokenKey = "token";
 
-
-const tokenKey = "token"
+http.setJwt(getJwt());
 
 export function login(email, password) {
-  console.log("..logining")
   return http.post(apiEndpoint, { email, password });
 }
 
@@ -18,20 +17,19 @@ export function logout() {
 
 export function getCurrentUser() {
   try{
-    const jwt = getJWT()
+    const jwt = getJwt()
     return jwtDecode(jwt)
   }catch (e) {
     return null
   }
 }
 
-export function getJWT() {
+export function getJwt() {
   return localStorage.getItem(tokenKey)
 }
 
 export default {
   login,
-  getJWT,
   getCurrentUser,
   logout
 }

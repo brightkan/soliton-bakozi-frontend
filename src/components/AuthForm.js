@@ -54,7 +54,9 @@ class AuthForm extends React.Component {
         initialValues={{email:"",password:""}}
         onSubmit={async (values,{setSubmitting}) =>{await this.doSubmit(values)}}
         validationSchema={ Yup.object().shape({
-          email: Yup.string().email("Must be a valid email").required("Email is required"),
+          email: Yup.string().email("Must be a valid email")
+            .required("Email is required")
+            .matches(/soliton.co.ug/, "Must be a valid soliton email"),
           password: Yup.string().required("Password is required")
             .min(8, "Password is too short - Should be 8 characters minimum")
         })}

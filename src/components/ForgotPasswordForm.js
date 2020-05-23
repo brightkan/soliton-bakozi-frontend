@@ -71,7 +71,8 @@ class ForgotPasswordForm extends React.Component {
         onSubmit={async (values,{setSubmittings})=>{await this.doSubmit}}
         validationSchema={Yup.object().shape(
           {email: Yup.string().email("Must be a valid email")
-              .required("Email field is required")}
+              .required("Email field is required")
+              .matches(/soliton.co.ug/, "Must be a valid soliton email")}
         )}
       >
         {props => {
