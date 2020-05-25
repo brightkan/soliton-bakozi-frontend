@@ -97,7 +97,7 @@ class AuthForm extends React.Component {
                 value={values.email}
                 onBlur={handleBlur}
                 onChange={handleChange}
-                style={errors.email&&inputErrorStyle}
+                style={errors.email && touched.email&&inputErrorStyle}
               />
               {errors.email && touched.email && (<div style={textError} >
                 {errors.email}
@@ -110,7 +110,7 @@ class AuthForm extends React.Component {
                      value={values.password}
                      onBlur={handleBlur}
                      onChange={handleChange}
-                     style={errors.password&&inputErrorStyle} />
+                     style={errors.password && touched.password &&inputErrorStyle} />
               {errors.password && touched.password && (<div style={textError}>
                 {errors.password}
               </div>)}
