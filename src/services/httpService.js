@@ -1,7 +1,4 @@
 import axios from "axios";
-import {getJWT} from "./authService"
-
-axios.defaults.headers.common["Authorization"] = `Bearer ${getJWT()}`;
 
 axios.interceptors.response.use(null, error => {
   const expectedError =
@@ -10,16 +7,20 @@ axios.interceptors.response.use(null, error => {
     error.response.status < 500;
 
   if (!expectedError) {
-    alert("An unexpected error occured ");
-    console.log(error);
+     alert("Could connect to the server")
   }
 
   return Promise.reject(error);
 });
 
+function setJwt(jwt){
+  axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+}
+
 export default {
   get: axios.get,
   post: axios.post,
   put: axios.put,
-  delete: axios.delete
+  delete: axios.delete,
+  setJwt,
 };
