@@ -1,8 +1,8 @@
 import logo200Image from 'assets/img/logo/logo.png';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Button, Form, FormGroup, Input, Label , Alert} from 'reactstrap';
-import {login} from '../services/authService'
+import { Button, Form, FormGroup, Input, Label, Alert, Spinner } from 'reactstrap';
+import { resetPassword } from '../services/authService';
 import {Link} from 'react-router-dom'
 
 import {Formik} from 'formik';
@@ -14,20 +14,30 @@ class PasswordResetForm extends React.Component {
 
   state = {
     errors: {},
-    alertVisible: true
-  }
+    alertVisible: true,
+    info:{},
+    buttonDisabled:false
+  };
 
-  doSubmit = async () => {
+  renderAlert=()=> {
+    const {status,message,error} = this.state.info;
+    return status ? <Alert color="success" isOpen={this.state.alertVisible} toggle={this.onDismissAlert} >
+      {message}
+    </Alert>  : (error &&
+      <Alert color="danger" isOpen={this.state.alertVisible} toggle={this.onDismissAlert} >
+        {error}
+      </Alert>
+    )
+  };
+
+  doSubmit = async (token,password) => {
     try {
-      const { email, password } = this.state.account;
-      const {data} = await login(email, password);
-      const { access } = data;
-      localStorage.setItem("token", access);
-      window.location = "/";
+      const {data} = await resetPassword(token,password);
+      this.setState({info: data, alertVisible: true, buttonDisabled: true})
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         const errors = { ...this.state.errors };
-        errors.loginError = ex.response.data;
+        errors.resetError = ex.response.data;
         this.setState({errors, alertVisible: true})
       }
     }
@@ -45,13 +55,19 @@ class PasswordResetForm extends React.Component {
       newPasswordInputProps,
       children,
       onLogoClick,
+      resetToken
     } = this.props;
 
-    const { loginError } = this.state.errors;
+
     return (
       <Formik
         initialValues={{password:"",confirmPassword:""}}
-        onSubmit={(values,{setSubmitting})=>{console.log("Submitting")}}
+        onSubmit={
+          async (values,
+                 {setSubmitting})=>{
+            await this.doSubmit(resetToken,values.confirmPassword)
+          }}
+
         validationSchema = {Yup.object().shape({
           password: Yup.string()
             .min(8, "Password too short")
@@ -94,12 +110,10 @@ class PasswordResetForm extends React.Component {
                   <h3>Soliton Bakozi</h3>
                 </div>
               )}
-              {loginError && (
-                <Alert color="danger" isOpen={this.state.alertVisible} toggle={this.onDismissAlert} >
-                  Invalid Credentials
-                </Alert>
-              )}
-
+              {/*Alert Message*/}
+              {this.renderAlert()}
+              {/*Loader*/}
+              {(isSubmitting && <center><Spinner style={{ width: '3rem', height: '3rem' , color: 'red'}} type="grow" /></center>)}
               <FormGroup>
                 <Label for={newPasswordLabel}>{newPasswordLabel}</Label>
                 <Input {...newPasswordInputProps}
@@ -119,7 +133,8 @@ class PasswordResetForm extends React.Component {
                        onBlur={handleBlur}
                        style={errors.confirmPassword && touched.confirmPassword && inputErrorStyle}
                 />
-                {errors.confirmPassword && touched.confirmPassword && (<div style={textError} >
+                {errors.confirmPassword && touched.confirmPassword &&
+                (<div style={textError} >
                   {errors.confirmPassword} </div>)}
               </FormGroup>
               <hr />
@@ -128,7 +143,7 @@ class PasswordResetForm extends React.Component {
                 className="bg-gradient-theme-left border-0"
                 block
                 onClick={handleSubmit}
-                disabled={isSubmitting}
+                disabled={isSubmitting || this.state.buttonDisabled}
               >
                 RESET PASSWORD
               </Button>

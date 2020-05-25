@@ -2,8 +2,10 @@ import logo200Image from 'assets/img/logo/logo.png';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Button, Form, FormGroup, Input, Label , Alert} from 'reactstrap';
-import {login} from '../services/authService'
+import {submitEmailPasswordReset} from '../services/authService'
 import {Link} from 'react-router-dom'
+
+import {Spinner} from 'reactstrap'
 
 import {Formik} from 'formik';
 import * as Yup from 'yup'
@@ -11,42 +13,32 @@ import * as Yup from 'yup'
 class ForgotPasswordForm extends React.Component {
 
   state = {
-    account: {
-      email: ""
-    },
+    info: {},
     errors: {},
     alertVisible: true
   }
 
 
-
-  componentWillMount() {
-  }
-
-
-  handleSubmit = async event => {
-    event.preventDefault();
-    await this.doSubmit();
+  renderAlert=()=> {
+    const {status,message,error} = this.state.info
+    return status ? <Alert color="info" isOpen={this.state.alertVisible} toggle={this.onDismissAlert} >
+      {message}
+      </Alert>  : (error &&
+      <Alert color="danger" isOpen={this.state.alertVisible} toggle={this.onDismissAlert} >
+        {error}
+      </Alert>
+    )
   };
 
-  handleChange = ({ currentTarget: input }) => {
-    const account = { ...this.state.account };
-    const { name, value } = input;
-    account[name] = value;
-    this.setState({ account });
-  };
 
-  doSubmit = async () => {
+  doSubmit = async (email) => {
     try {
-      const { email, password } = this.state.account;
-      const {data} = await login(email, password);
-      const { access } = data;
-      localStorage.setItem("token", access);
-      window.location = "/";
+      const {data} = await submitEmailPasswordReset(email);
+      this.setState({info: data, alertVisible: true})
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         const errors = { ...this.state.errors };
-        errors.loginError = ex.response.data;
+        errors.submitError = ex.response.data;
         this.setState({errors, alertVisible: true})
       }
     }
@@ -64,11 +56,11 @@ class ForgotPasswordForm extends React.Component {
       onLogoClick,
     } = this.props;
 
-    const { loginError } = this.state.errors;
+
     return (
       <Formik
         initialValues={{email:""}}
-        onSubmit={async (values,{setSubmittings})=>{await this.doSubmit}}
+        onSubmit={async (values,{setSubmitting})=>{await this.doSubmit(values.email)}}
         validationSchema={Yup.object().shape(
           {email: Yup.string().email("Must be a valid email")
               .required("Email field is required")
@@ -99,12 +91,11 @@ class ForgotPasswordForm extends React.Component {
                   <h3>Soliton Bakozi</h3>
                 </div>
               )}
-              {loginError && (
-                <Alert color="danger" isOpen={this.state.alertVisible} toggle={this.onDismissAlert} >
-                  Invalid Credentials
-                </Alert>
-              )}
-
+              {
+                this.renderAlert()
+              }
+              {/*Loader*/}
+              {(isSubmitting && <center><Spinner style={{ width: '3rem', height: '3rem' , color: 'red'}} type="grow" /></center>)}
               <FormGroup>
                 <Label for={emailLabel}>{emailLabel}</Label>
                 <Input {...emailInputProps}
@@ -118,6 +109,7 @@ class ForgotPasswordForm extends React.Component {
                 <small>Submit Email to receive password reset link</small>
               </FormGroup>
               <hr />
+
               <Button
                 size="lg"
                 className="bg-gradient-theme-left border-0"
@@ -125,6 +117,7 @@ class ForgotPasswordForm extends React.Component {
                 onClick={handleSubmit}
                 disabled={isSubmitting}
               >
+
                 SUBMIT EMAIL
               </Button>
 

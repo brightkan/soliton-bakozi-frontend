@@ -59,7 +59,7 @@ class App extends React.Component {
 
             <LayoutRoute
               exact
-              path="/password_reset"
+              path="/password_reset/:slug"
               layout={EmptyLayout}
               component={props => (
                 <PasswordResetPage {...props}/>

@@ -10,13 +10,16 @@ class PasswordResetPage extends React.Component {
     this.props.history.push('/');
   };
 
+
   render() {
+    let {slug} = this.props.match.params;
     return (
       <AuthLayout>
         <PasswordResetForm
           authState={this.props.authState}
           onChangeAuthState={this.handleAuthState}
           onLogoClick={this.handleLogoClick}
+          resetToken={slug}
         />
       </AuthLayout>
     );
