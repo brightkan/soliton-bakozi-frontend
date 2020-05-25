@@ -146,10 +146,10 @@ class Header extends React.Component {
                       <MdPersonPin /> Profile
                     </ListGroupItem>
                     <ListGroupItem tag="button" action className="border-light">
-                      <MdInsertChart /> Stats
+                      <MdInsertChart /> Payslip
                     </ListGroupItem>
                     <ListGroupItem tag="button" action className="border-light">
-                      <MdMessage /> Messages
+                      <MdMessage /> Training Programs
                     </ListGroupItem>
                     <ListGroupItem tag="button" action className="border-light">
                       <MdSettingsApplications /> Settings
@@ -157,9 +157,11 @@ class Header extends React.Component {
                     <ListGroupItem tag="button" action className="border-light">
                       <MdHelp /> Help
                     </ListGroupItem>
-                    <ListGroupItem tag="button" action className="border-light">
-                     <Link to="/logout"><MdExitToApp /> Logout</Link>
-                    </ListGroupItem>
+                    <Link to="/logout">
+                      <ListGroupItem tag="button" action className="border-light">
+                        <MdExitToApp /> Logout
+                      </ListGroupItem>
+                    </Link>
                   </ListGroup>
                 </UserCard>
               </PopoverBody>

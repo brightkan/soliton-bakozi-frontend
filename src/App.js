@@ -5,11 +5,12 @@ import PageSpinner from 'components/PageSpinner';
 import LoginPage from './pages/LoginPage';
 import React from 'react';
 import componentQueries from 'react-component-queries';
-import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './styles/reduction.scss';
 import Logout from './components/Logout';
 import ForgotPasswordPage from './pages/ForgotPasswordPage'
 import PasswordResetPage from './pages/PasswordResetPage'
+import ProtectedRoute from './components/Routes/ProtectedRoute';
 
 
 const AlertPage = React.lazy(() => import('pages/AlertPage'));
@@ -29,6 +30,8 @@ const TablePage = React.lazy(() => import('pages/TablePage'));
 const TypographyPage = React.lazy(() => import('pages/TypographyPage'));
 const WidgetPage = React.lazy(() => import('pages/WidgetPage'));
 
+
+
 const getBasename = () => {
   return `/${process.env.PUBLIC_URL.split('/').pop()}`;
 };
@@ -40,6 +43,7 @@ class App extends React.Component {
         <GAListener>
           <Switch>
             <Route exact path="/logout" component={Logout}/>
+
             <LayoutRoute
               exact
               path="/login"
@@ -68,7 +72,7 @@ class App extends React.Component {
 
             <MainLayout breakpoint={this.props.breakpoint}>
               <React.Suspense fallback={<PageSpinner />}>
-                <Route exact path="/" component={DashboardPage} />
+                <ProtectedRoute exact path="/" component={DashboardPage} />
                 <Route exact path="/login-modal" component={AuthModalPage} />
                 <Route exact path="/buttons" component={ButtonPage} />
                 <Route exact path="/cards" component={CardPage} />
@@ -90,7 +94,6 @@ class App extends React.Component {
                 <Route exact path="/charts" component={ChartPage} />
               </React.Suspense>
             </MainLayout>
-            <Redirect to="/" />
           </Switch>
         </GAListener>
       </BrowserRouter>
