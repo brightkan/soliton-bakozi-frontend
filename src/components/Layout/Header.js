@@ -1,4 +1,3 @@
-import Avatar from 'components/Avatar';
 import { UserCard } from 'components/Card';
 import Notifications from 'components/Notifications';
 import SearchInput from 'components/SearchInput';
@@ -121,9 +120,14 @@ class Header extends React.Component {
 
           <NavItem>
             <NavLink id="Popover2">
-              <Avatar
+              {/*<Avatar*/}
+              {/*  onClick={this.toggleUserCardPopover}*/}
+              {/*  className="can-click"*/}
+              {/*/>*/}
+              <MdPersonPin
+                size={25}
+                className="text-secondary can-click"
                 onClick={this.toggleUserCardPopover}
-                className="can-click"
               />
             </NavLink>
             <Popover
@@ -138,7 +142,6 @@ class Header extends React.Component {
                 <UserCard
                   title="Jane"
                   subtitle="jane@jane.com"
-                  text="Last updated 3 mins ago"
                   className="border-light"
                 >
                   <ListGroup flush>
@@ -149,7 +152,13 @@ class Header extends React.Component {
                       <MdInsertChart /> Payslip
                     </ListGroupItem>
                     <ListGroupItem tag="button" action className="border-light">
+                      <MdMessage /> Overtime Applications
+                    </ListGroupItem>
+                    <ListGroupItem tag="button" action className="border-light">
                       <MdMessage /> Training Programs
+                    </ListGroupItem>
+                    <ListGroupItem tag="button" action className="border-light">
+                      <MdMessage /> Contracts
                     </ListGroupItem>
                     <ListGroupItem tag="button" action className="border-light">
                       <MdSettingsApplications /> Settings
