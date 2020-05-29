@@ -9,12 +9,16 @@ import {
   MdClearAll,
   MdExitToApp,
   MdHelp,
-  MdInsertChart,
-  MdMessage,
   MdNotificationsActive,
   MdNotificationsNone,
   MdPersonPin,
   MdSettingsApplications,
+  MdAccountCircle,
+  MdLibraryBooks,
+  MdHourglassFull,
+  MdSchool,
+  MdAssignment,
+  MdEvent,
 } from 'react-icons/md';
 import {
   Button,
@@ -30,6 +34,7 @@ import {
 } from 'reactstrap';
 import bn from 'utils/bemnames';
 
+
 const bem = bn.create('header');
 
 const MdNotificationsActiveWithBadge = withBadge({
@@ -42,13 +47,13 @@ const MdNotificationsActiveWithBadge = withBadge({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  children: <small>5</small>,
+  children: <small>{notificationsData.length}</small>,
 })(MdNotificationsActive);
 
 class Header extends React.Component {
   state = {
     isOpenNotificationPopover: false,
-    isNotificationConfirmed: false,
+    isNotificationConfirmed: true,
     isOpenUserCardPopover: false,
   };
 
@@ -74,6 +79,12 @@ class Header extends React.Component {
 
     document.querySelector('.cr-sidebar').classList.toggle('cr-sidebar--open');
   };
+
+  componentDidMount() {
+    if(notificationsData.length>0){
+      this.setState({isNotificationConfirmed: false})
+    }
+  }
 
   render() {
     const { isNotificationConfirmed } = this.state;
@@ -146,25 +157,28 @@ class Header extends React.Component {
                 >
                   <ListGroup flush>
                     <ListGroupItem tag="button" action className="border-light">
-                      <MdPersonPin /> Profile
+                      <MdAccountCircle/> Your Profile
                     </ListGroupItem>
                     <ListGroupItem tag="button" action className="border-light">
-                      <MdInsertChart /> Payslip
+                      <MdLibraryBooks /> Your Payslip
                     </ListGroupItem>
                     <ListGroupItem tag="button" action className="border-light">
-                      <MdMessage /> Overtime Applications
+                      <MdHourglassFull/> Your Overtime Applications
                     </ListGroupItem>
                     <ListGroupItem tag="button" action className="border-light">
-                      <MdMessage /> Training Programs
+                      <MdSchool/> Your Training Programs
                     </ListGroupItem>
                     <ListGroupItem tag="button" action className="border-light">
-                      <MdMessage /> Contracts
+                      <MdEvent/> Your Leave Application
+                    </ListGroupItem>
+                    <ListGroupItem tag="button" action className="border-light">
+                      <MdAssignment/> Your Contracts
                     </ListGroupItem>
                     <ListGroupItem tag="button" action className="border-light">
                       <MdSettingsApplications /> Settings
                     </ListGroupItem>
                     <ListGroupItem tag="button" action className="border-light">
-                      <MdHelp /> Help
+                      <MdHelp/> Help
                     </ListGroupItem>
                     <Link to="/logout">
                       <ListGroupItem tag="button" action className="border-light">
