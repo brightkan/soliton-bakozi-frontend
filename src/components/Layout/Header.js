@@ -4,6 +4,7 @@ import SearchInput from 'components/SearchInput';
 import { notificationsData } from 'demos/header';
 import withBadge from 'hocs/withBadge';
 import React from 'react';
+import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {
   MdClearAll,
@@ -33,6 +34,13 @@ import {
   PopoverBody,
 } from 'reactstrap';
 import bn from 'utils/bemnames';
+import { getCurrentUser } from '../../services/authService';
+import { loadUsers } from '../../redux/actions/userActions';
+import PropTypes from 'prop-types';
+import { loadEmployees } from '../../redux/actions/employeeActions';
+import { loadSolitonUsers } from '../../redux/actions/solitonUserActions';
+
+
 
 
 const bem = bn.create('header');
@@ -55,6 +63,7 @@ class Header extends React.Component {
     isOpenNotificationPopover: false,
     isNotificationConfirmed: true,
     isOpenUserCardPopover: false,
+    userFromToken:{}
   };
 
   toggleNotificationPopover = () => {
@@ -80,14 +89,33 @@ class Header extends React.Component {
     document.querySelector('.cr-sidebar').classList.toggle('cr-sidebar--open');
   };
 
-  componentDidMount() {
+  setIsNotificationsConfirmed = notificationsData => {
     if(notificationsData.length>0){
       this.setState({isNotificationConfirmed: false})
     }
+  };
+
+  componentDidMount() {
+    this.setIsNotificationsConfirmed(notificationsData)
+    this.userFromToken = getCurrentUser();
+    this.props.loadUsers();
+    this.setState(this.userFromToken)
+    this.props.loadEmployees();
+    this.props.loadSolitonUsers();
+
   }
+
 
   render() {
     const { isNotificationConfirmed } = this.state;
+    const {
+      currentUser,
+      currentSolitonUser,
+      employees
+               } = this.props;
+
+    const currentEmployee = employees && currentSolitonUser && (employees.filter(employee=>(employee.id===currentSolitonUser.employee)))[0];
+
 
     return (
       <Navbar light expand className={bem.b('bg-white')}>
@@ -151,8 +179,8 @@ class Header extends React.Component {
             >
               <PopoverBody className="p-0 border-light">
                 <UserCard
-                  title="Jane"
-                  subtitle="jane@jane.com"
+                  title={currentEmployee&&currentEmployee.first_name}
+                  subtitle={currentUser&&currentUser.email}
                   className="border-light"
                 >
                   <ListGroup flush>
@@ -196,4 +224,21 @@ class Header extends React.Component {
   }
 }
 
-export default Header;
+Header.propTypes = {
+  loadUsers: PropTypes.func.isRequired,
+  loadSolitonUsers: PropTypes.func.isRequired,
+  loadEmployees: PropTypes.func.isRequired,
+  currentUser: PropTypes.object,
+};
+
+const userFromToken = getCurrentUser();
+
+const mapStateToProps=(state) =>{
+  return {
+    currentUser: state.users.filter(user => (user.id === userFromToken.user_id))[0],
+    currentSolitonUser: state.solitonUsers.filter(solitonUser=>(solitonUser.user === userFromToken.user_id))[0],
+    employees: state.employees,
+  };
+}
+
+export default connect(mapStateToProps,{loadUsers,loadEmployees,loadSolitonUsers})(Header);

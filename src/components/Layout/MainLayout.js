@@ -22,6 +22,7 @@ class MainLayout extends React.Component {
     if(!isLoggedIn){
       window.location = "/login"
     }
+  //  load data into redux store
   }
 
   // close sidebar when

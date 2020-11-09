@@ -32,4 +32,6 @@ export default {
   trainingSchedules: [],
   users: [],
   apiCallsInProgress: 0,
+  currentUser:{},
+  currentEmployee: {},
 };
