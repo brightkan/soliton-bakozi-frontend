@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "https://reduction-admin.github.io/react-reduction/precache-manifest.f1bb02d2ab7889e31b1a85da6da0bb78.js"
+  "https://brightkan.github.io/soliton-bakozi-frontend/precache-manifest.a36446a737b55a2a818f3040da3d71dd.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("https://reduction-admin.github.io/react-reduction/index.html", {
+workbox.routing.registerNavigationRoute("https://brightkan.github.io/soliton-bakozi-frontend/index.html", {
   
   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 });
