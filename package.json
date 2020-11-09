@@ -2,7 +2,7 @@
   "name": "soliton-bakozi",
   "version": "1.1.0",
   "private": false,
-  "homepage": "https://brightkan.github.io/hr-frontend/",
+  "homepage": "https://brightkan.github.io/soliton-bakozi-frontend/",
   "dependencies": {
     "axios": "^0.19.2",
     "bootstrap": "4.3.1",
