@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "https://brightkan.github.io/soliton-bakozi-frontend/precache-manifest.6a97d01b6c130da33beb18bf5bd63e05.js"
+  "https://brightkan.github.io/soliton-bakozi-frontend/precache-manifest.00e5fa5aeb0e48dadb5b2fb75ce5d1fb.js"
 );
 
 workbox.clientsClaim();
