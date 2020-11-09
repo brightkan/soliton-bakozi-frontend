@@ -1,30 +1,23 @@
 import logo200Image from 'assets/img/logo/logo.png';
-import sidebarBgImage from 'assets/img/sidebar/sidebar-4.jpg';
+import sidebarBgImage from 'assets/img/sidebar/sidebar-8.jpg';
 import SourceLink from 'components/SourceLink';
 import React from 'react';
 
 import {
   MdAccountCircle,
-  MdArrowDropDownCircle,
-  MdBorderAll,
-  MdBrush,
-  MdChromeReaderMode,
   MdDashboard,
-  MdExtension,
-  MdGroupWork,
-  MdInsertChart,
   MdKeyboardArrowDown,
-  MdNotificationsActive,
-  MdPages,
-  MdRadioButtonChecked,
-  MdSend,
-  MdStar,
-  MdTextFields,
-  MdViewCarousel,
-  MdViewDay,
-  MdViewList,
-  MdWeb,
-  MdWidgets,
+  MdVerifiedUser,
+  MdAccountBalance,
+  MdAssignmentInd,
+  MdEvent,
+  MdLibraryBooks,
+  MdBeachAccess,
+  MdPeople,
+  MdAssignment,
+  MdSchool,
+  MdBook,
+  MdHourglassFull,
 } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
 import {
@@ -43,57 +36,97 @@ const sidebarBackground = {
   backgroundRepeat: 'no-repeat',
 };
 
-const navComponents = [
-  { to: '/buttons', name: 'buttons', exact: false, Icon: MdRadioButtonChecked },
-  {
-    to: '/button-groups',
-    name: 'button groups',
-    exact: false,
-    Icon: MdGroupWork,
-  },
-  { to: '/forms', name: 'forms', exact: false, Icon: MdChromeReaderMode },
-  { to: '/input-groups', name: 'input groups', exact: false, Icon: MdViewList },
-  {
-    to: '/dropdowns',
-    name: 'dropdowns',
-    exact: false,
-    Icon: MdArrowDropDownCircle,
-  },
-  { to: '/badges', name: 'badges', exact: false, Icon: MdStar },
-  { to: '/alerts', name: 'alerts', exact: false, Icon: MdNotificationsActive },
-  { to: '/progress', name: 'progress', exact: false, Icon: MdBrush },
-  { to: '/modals', name: 'modals', exact: false, Icon: MdViewDay },
+
+
+
+const adminPages = [
+  { to: '/users', name: 'Manage Users', exact: false, Icon: MdAccountCircle },
+  { to: '/view_users', name: 'View Users', exact: false, Icon: MdAccountCircle },
 ];
 
-const navContents = [
-  { to: '/typography', name: 'typography', exact: false, Icon: MdTextFields },
-  { to: '/tables', name: 'tables', exact: false, Icon: MdBorderAll },
+const employeePages = [
+  { to: '/employees', name: 'Manage Employees', exact: false, Icon: MdAccountCircle },
+  { to: '/view_employees', name: 'View Employees', exact: false, Icon: MdAccountCircle },
 ];
 
-const pageContents = [
-  { to: '/login', name: 'login / signup', exact: false, Icon: MdAccountCircle },
-  {
-    to: '/login-modal',
-    name: 'login modal',
-    exact: false,
-    Icon: MdViewCarousel,
-  },
+const leavePages = [
+  { to: '/approve_leave_application', name: 'Approve Leave Application', exact: false, Icon: MdAccountCircle },
+  { to: '/approve_for_leave', name: 'Apply for Leave', exact: false, Icon: MdAccountCircle },
+  { to: '/View_leave_plan', name: 'View Leave Plan', exact: false, Icon: MdAccountCircle },
+  { to: '/create_leave_plan', name: 'Create Leave Plan', exact: false, Icon: MdAccountCircle },
+  { to: '/approve_leave_plan', name: 'Approve Leave Plan', exact: false, Icon: MdAccountCircle },
+];
+
+const payrollPages = [
+  { to: '/manage_payroll_records', name: 'Manage Payroll Records', exact: false, Icon: MdAccountCircle },
+  { to: '/View_payroll_records', name: 'View Payroll Records', exact: false, Icon: MdAccountCircle },
+];
+
+const holidayPages = [
+  { to: '/manage_holidays', name: 'Manage Holidays', exact: false, Icon: MdAccountCircle },
+];
+
+const recruitmentPages = [
+  { to: '/manage_job_advertisement', name: 'Manage Job Advertisement', exact: false, Icon: MdAccountCircle },
+  { to: '/view_available_jobs', name: 'View Available Jobs', exact: false, Icon: MdAccountCircle },
+  { to: '/view_job_applications', name: 'View Job Applications', exact: false, Icon: MdAccountCircle },
+];
+
+const contractPages = [
+  { to: '/manage_job_contracts', name: 'Manage Job Contracts', exact: false, Icon: MdAccountCircle },
+  { to: '/view_employee_contracts', name: 'View Employee Contracts', exact: false, Icon: MdAccountCircle },
+];
+
+const trainingPages = [
+  { to: '/approve_training_application', name: 'Approve Training Application', exact: false, Icon: MdAccountCircle },
+  { to: '/apply_training_application', name: 'Apply for Training', exact: false, Icon: MdAccountCircle },
+  { to: '/schedule_training', name: 'Schedule Training', exact: false, Icon: MdAccountCircle },
+  { to: '/view_training_schedules', name: 'View Training Schedules', exact: false, Icon: MdAccountCircle },
+];
+//Learning and development pages
+const landPages = [
+  { to: '/manage_resources', name: 'Manage Resources', exact: false, Icon: MdAccountCircle },
+  { to: '/view_resources', name: 'View Resources', exact: false, Icon: MdAccountCircle },
+
+];
+
+const organisationPages = [
+  { to: '/manage_job_positions', name: 'Manage Job Positions', exact: false },
+  { to: '/manage_departments', name: 'Manage Departments', exact: false },
+  { to: '/manage_teams', name: 'Manage Teams', exact: false },
+
+];
+
+const overtimePages = [
+  { to: '/approve_overtime', name: 'Approve overtime', exact: true, Icon: MdDashboard },
+  { to: '/apply_for_overtime', name: 'Apply for overtime', exact: true, Icon: MdDashboard },
+  { to: '/view_overtime_applications', name: 'View Overtime Applications', exact: true, Icon: MdDashboard },
+  { to: '/create_overtime_plan', name: 'Create Overtime Plan', exact: true, Icon: MdDashboard },
+  { to: '/approve_overtime_plan', name: 'Approve Overtime Plan', exact: true, Icon: MdDashboard },
 ];
 
 const navItems = [
-  { to: '/', name: 'dashboard', exact: true, Icon: MdDashboard },
-  { to: '/cards', name: 'cards', exact: false, Icon: MdWeb },
-  { to: '/charts', name: 'charts', exact: false, Icon: MdInsertChart },
-  { to: '/widgets', name: 'widgets', exact: false, Icon: MdWidgets },
+  { to: '/', name: 'Dashboard', exact: true, Icon: MdDashboard },
+
 ];
 
 const bem = bn.create('sidebar');
 
 class Sidebar extends React.Component {
   state = {
-    isOpenComponents: true,
-    isOpenContents: true,
-    isOpenPages: true,
+    isOpenAdmin: false,
+    isOpenOrganisation: false,
+    isOpenEmployees:false,
+    isOpenLeave:false,
+    isOpenPayroll:false,
+    isOpenOvertime:false,
+    isOpenHoliday:false,
+    isOpenRecruitment:false,
+    isOpenContracts:false,
+    isOpenTraining: false,
+    //Learning and development
+    isOpenLand:false,
+
   };
 
   handleClick = name => () => {
@@ -124,11 +157,52 @@ class Sidebar extends React.Component {
             </SourceLink>
           </Navbar>
           <Nav vertical>
+            {/*Vertical Navbar Items*/}
+            <NavItem
+              className={bem.e('nav-item')}
+              onClick={this.handleClick('Admin')}
+            >
+              <BSNavLink className={bem.e('nav-item-collapse')}>
+                <div className="d-flex">
+                  <MdVerifiedUser className={bem.e('nav-item-icon')} />
+                  <span className="">Admin</span>
+                </div>
+                <MdKeyboardArrowDown
+                  className={bem.e('nav-item-icon')}
+                  style={{
+                    padding: 0,
+                    transform: this.state.isOpenAdmin
+                      ? 'rotate(0deg)'
+                      : 'rotate(-90deg)',
+                    transitionDuration: '0.3s',
+                    transitionProperty: 'transform',
+                  }}
+                />
+              </BSNavLink>
+            </NavItem>
+            <Collapse isOpen={this.state.isOpenAdmin}>
+              {adminPages.map(({ to, name, exact, Icon }, index) => (
+                <NavItem key={index} className={bem.e('nav-item')}>
+                  <BSNavLink
+                    id={`navItem-${name}-${index}`}
+                    className=""
+                    tag={NavLink}
+                    to={to}
+                    activeClassName="active"
+                    exact={exact}
+                  >
+                    <span className="">{name}</span>
+                  </BSNavLink>
+                </NavItem>
+              ))}
+            </Collapse>
+
+
             {navItems.map(({ to, name, exact, Icon }, index) => (
               <NavItem key={index} className={bem.e('nav-item')}>
                 <BSNavLink
                   id={`navItem-${name}-${index}`}
-                  className="text-uppercase"
+                  className=""
                   tag={NavLink}
                   to={to}
                   activeClassName="active"
@@ -142,18 +216,18 @@ class Sidebar extends React.Component {
 
             <NavItem
               className={bem.e('nav-item')}
-              onClick={this.handleClick('Components')}
+              onClick={this.handleClick('Organisation')}
             >
               <BSNavLink className={bem.e('nav-item-collapse')}>
                 <div className="d-flex">
-                  <MdExtension className={bem.e('nav-item-icon')} />
-                  <span className=" align-self-start">Components</span>
+                  <MdAccountBalance className={bem.e('nav-item-icon')} />
+                  <span className="">Organisation</span>
                 </div>
                 <MdKeyboardArrowDown
                   className={bem.e('nav-item-icon')}
                   style={{
                     padding: 0,
-                    transform: this.state.isOpenComponents
+                    transform: this.state.isOpenOrganisation
                       ? 'rotate(0deg)'
                       : 'rotate(-90deg)',
                     transitionDuration: '0.3s',
@@ -162,18 +236,17 @@ class Sidebar extends React.Component {
                 />
               </BSNavLink>
             </NavItem>
-            <Collapse isOpen={this.state.isOpenComponents}>
-              {navComponents.map(({ to, name, exact, Icon }, index) => (
+            <Collapse isOpen={this.state.isOpenOrganisation}>
+              {organisationPages.map(({ to, name, exact, Icon }, index) => (
                 <NavItem key={index} className={bem.e('nav-item')}>
                   <BSNavLink
                     id={`navItem-${name}-${index}`}
-                    className="text-uppercase"
+                    className=""
                     tag={NavLink}
                     to={to}
                     activeClassName="active"
                     exact={exact}
                   >
-                    <Icon className={bem.e('nav-item-icon')} />
                     <span className="">{name}</span>
                   </BSNavLink>
                 </NavItem>
@@ -182,18 +255,18 @@ class Sidebar extends React.Component {
 
             <NavItem
               className={bem.e('nav-item')}
-              onClick={this.handleClick('Contents')}
+              onClick={this.handleClick('Employees')}
             >
               <BSNavLink className={bem.e('nav-item-collapse')}>
                 <div className="d-flex">
-                  <MdSend className={bem.e('nav-item-icon')} />
-                  <span className="">Contents</span>
+                  <MdAssignmentInd className={bem.e('nav-item-icon')} />
+                  <span className="">Employees</span>
                 </div>
                 <MdKeyboardArrowDown
                   className={bem.e('nav-item-icon')}
                   style={{
                     padding: 0,
-                    transform: this.state.isOpenContents
+                    transform: this.state.isOpenEmployees
                       ? 'rotate(0deg)'
                       : 'rotate(-90deg)',
                     transitionDuration: '0.3s',
@@ -202,18 +275,17 @@ class Sidebar extends React.Component {
                 />
               </BSNavLink>
             </NavItem>
-            <Collapse isOpen={this.state.isOpenContents}>
-              {navContents.map(({ to, name, exact, Icon }, index) => (
+            <Collapse isOpen={this.state.isOpenEmployees}>
+              {employeePages.map(({ to, name, exact, Icon }, index) => (
                 <NavItem key={index} className={bem.e('nav-item')}>
                   <BSNavLink
                     id={`navItem-${name}-${index}`}
-                    className="text-uppercase"
+                    className=""
                     tag={NavLink}
                     to={to}
                     activeClassName="active"
                     exact={exact}
                   >
-                    <Icon className={bem.e('nav-item-icon')} />
                     <span className="">{name}</span>
                   </BSNavLink>
                 </NavItem>
@@ -222,18 +294,18 @@ class Sidebar extends React.Component {
 
             <NavItem
               className={bem.e('nav-item')}
-              onClick={this.handleClick('Pages')}
+              onClick={this.handleClick('Leave')}
             >
               <BSNavLink className={bem.e('nav-item-collapse')}>
                 <div className="d-flex">
-                  <MdPages className={bem.e('nav-item-icon')} />
-                  <span className="">Pages</span>
+                  <MdEvent className={bem.e('nav-item-icon')} />
+                  <span className="">Leave</span>
                 </div>
                 <MdKeyboardArrowDown
                   className={bem.e('nav-item-icon')}
                   style={{
                     padding: 0,
-                    transform: this.state.isOpenPages
+                    transform: this.state.isOpenLeave
                       ? 'rotate(0deg)'
                       : 'rotate(-90deg)',
                     transitionDuration: '0.3s',
@@ -242,18 +314,291 @@ class Sidebar extends React.Component {
                 />
               </BSNavLink>
             </NavItem>
-            <Collapse isOpen={this.state.isOpenPages}>
-              {pageContents.map(({ to, name, exact, Icon }, index) => (
+            <Collapse isOpen={this.state.isOpenLeave}>
+              {leavePages.map(({ to, name, exact, Icon }, index) => (
                 <NavItem key={index} className={bem.e('nav-item')}>
                   <BSNavLink
                     id={`navItem-${name}-${index}`}
-                    className="text-uppercase"
+                    className=""
                     tag={NavLink}
                     to={to}
                     activeClassName="active"
                     exact={exact}
                   >
-                    <Icon className={bem.e('nav-item-icon')} />
+                    <span className="">{name}</span>
+                  </BSNavLink>
+                </NavItem>
+              ))}
+            </Collapse>
+
+            <NavItem
+              className={bem.e('nav-item')}
+              onClick={this.handleClick('Payroll')}
+            >
+              <BSNavLink className={bem.e('nav-item-collapse')}>
+                <div className="d-flex">
+                  <MdLibraryBooks className={bem.e('nav-item-icon')} />
+                  <span className="">Payroll</span>
+                </div>
+                <MdKeyboardArrowDown
+                  className={bem.e('nav-item-icon')}
+                  style={{
+                    padding: 0,
+                    transform: this.state.isOpenPayroll
+                      ? 'rotate(0deg)'
+                      : 'rotate(-90deg)',
+                    transitionDuration: '0.3s',
+                    transitionProperty: 'transform',
+                  }}
+                />
+              </BSNavLink>
+            </NavItem>
+            <Collapse isOpen={this.state.isOpenPayroll}>
+              {payrollPages.map(({ to, name, exact, Icon }, index) => (
+                <NavItem key={index} className={bem.e('nav-item')}>
+                  <BSNavLink
+                    id={`navItem-${name}-${index}`}
+                    className=""
+                    tag={NavLink}
+                    to={to}
+                    activeClassName="active"
+                    exact={exact}
+                  >
+                    <span className="">{name}</span>
+                  </BSNavLink>
+                </NavItem>
+              ))}
+            </Collapse>
+
+            <NavItem
+              className={bem.e('nav-item')}
+              onClick={this.handleClick('Overtime')}
+            >
+              <BSNavLink className={bem.e('nav-item-collapse')}>
+                <div className="d-flex">
+                  <MdHourglassFull className={bem.e('nav-item-icon')} />
+                  <span className="">Overtime</span>
+                </div>
+                <MdKeyboardArrowDown
+                  className={bem.e('nav-item-icon')}
+                  style={{
+                    padding: 0,
+                    transform: this.state.isOpenOvertime
+                      ? 'rotate(0deg)'
+                      : 'rotate(-90deg)',
+                    transitionDuration: '0.3s',
+                    transitionProperty: 'transform',
+                  }}
+                />
+              </BSNavLink>
+            </NavItem>
+            <Collapse isOpen={this.state.isOpenOvertime}>
+              {overtimePages.map(({ to, name, exact, Icon }, index) => (
+                <NavItem key={index} className={bem.e('nav-item')}>
+                  <BSNavLink
+                    id={`navItem-${name}-${index}`}
+                    className=""
+                    tag={NavLink}
+                    to={to}
+                    activeClassName="active"
+                    exact={exact}
+                  >
+                    <span className="">{name}</span>
+                  </BSNavLink>
+                </NavItem>
+              ))}
+            </Collapse>
+
+
+            <NavItem
+              className={bem.e('nav-item')}
+              onClick={this.handleClick('Holiday')}
+            >
+              <BSNavLink className={bem.e('nav-item-collapse')}>
+                <div className="d-flex">
+                  <MdBeachAccess className={bem.e('nav-item-icon')} />
+                  <span className="">Holiday</span>
+                </div>
+                <MdKeyboardArrowDown
+                  className={bem.e('nav-item-icon')}
+                  style={{
+                    padding: 0,
+                    transform: this.state.isOpenHoliday
+                      ? 'rotate(0deg)'
+                      : 'rotate(-90deg)',
+                    transitionDuration: '0.3s',
+                    transitionProperty: 'transform',
+                  }}
+                />
+              </BSNavLink>
+            </NavItem>
+            <Collapse isOpen={this.state.isOpenHoliday}>
+              {holidayPages.map(({ to, name, exact, Icon }, index) => (
+                <NavItem key={index} className={bem.e('nav-item')}>
+                  <BSNavLink
+                    id={`navItem-${name}-${index}`}
+                    className=""
+                    tag={NavLink}
+                    to={to}
+                    activeClassName="active"
+                    exact={exact}
+                  >
+                    <span className="">{name}</span>
+                  </BSNavLink>
+                </NavItem>
+              ))}
+            </Collapse>
+
+            <NavItem
+              className={bem.e('nav-item')}
+              onClick={this.handleClick('Recruitment')}
+            >
+              <BSNavLink className={bem.e('nav-item-collapse')}>
+                <div className="d-flex">
+                  <MdPeople className={bem.e('nav-item-icon')} />
+                  <span className="">Recruitment</span>
+                </div>
+                <MdKeyboardArrowDown
+                  className={bem.e('nav-item-icon')}
+                  style={{
+                    padding: 0,
+                    transform: this.state.isOpenRecruitment
+                      ? 'rotate(0deg)'
+                      : 'rotate(-90deg)',
+                    transitionDuration: '0.3s',
+                    transitionProperty: 'transform',
+                  }}
+                />
+              </BSNavLink>
+            </NavItem>
+            <Collapse isOpen={this.state.isOpenRecruitment}>
+              {recruitmentPages.map(({ to, name, exact, Icon }, index) => (
+                <NavItem key={index} className={bem.e('nav-item')}>
+                  <BSNavLink
+                    id={`navItem-${name}-${index}`}
+                    className=""
+                    tag={NavLink}
+                    to={to}
+                    activeClassName="active"
+                    exact={exact}
+                  >
+                    <span className="">{name}</span>
+                  </BSNavLink>
+                </NavItem>
+              ))}
+            </Collapse>
+
+            <NavItem
+              className={bem.e('nav-item')}
+              onClick={this.handleClick('Contracts')}
+            >
+              <BSNavLink className={bem.e('nav-item-collapse')}>
+                <div className="d-flex">
+                  <MdAssignment className={bem.e('nav-item-icon')} />
+                  <span className="">Contracts</span>
+                </div>
+                <MdKeyboardArrowDown
+                  className={bem.e('nav-item-icon')}
+                  style={{
+                    padding: 0,
+                    transform: this.state.isOpenContracts
+                      ? 'rotate(0deg)'
+                      : 'rotate(-90deg)',
+                    transitionDuration: '0.3s',
+                    transitionProperty: 'transform',
+                  }}
+                />
+              </BSNavLink>
+            </NavItem>
+            <Collapse isOpen={this.state.isOpenContracts}>
+              {contractPages.map(({ to, name, exact, Icon }, index) => (
+                <NavItem key={index} className={bem.e('nav-item')}>
+                  <BSNavLink
+                    id={`navItem-${name}-${index}`}
+                    className=""
+                    tag={NavLink}
+                    to={to}
+                    activeClassName="active"
+                    exact={exact}
+                  >
+                    <span className="">{name}</span>
+                  </BSNavLink>
+                </NavItem>
+              ))}
+            </Collapse>
+
+            <NavItem
+              className={bem.e('nav-item')}
+              onClick={this.handleClick('Training')}
+            >
+              <BSNavLink className={bem.e('nav-item-collapse')}>
+                <div className="d-flex">
+                  <MdSchool className={bem.e('nav-item-icon')} />
+                  <span className="">Training</span>
+                </div>
+                <MdKeyboardArrowDown
+                  className={bem.e('nav-item-icon')}
+                  style={{
+                    padding: 0,
+                    transform: this.state.isOpenTraining
+                      ? 'rotate(0deg)'
+                      : 'rotate(-90deg)',
+                    transitionDuration: '0.3s',
+                    transitionProperty: 'transform',
+                  }}
+                />
+              </BSNavLink>
+            </NavItem>
+            <Collapse isOpen={this.state.isOpenTraining}>
+              {trainingPages.map(({ to, name, exact, Icon }, index) => (
+                <NavItem key={index} className={bem.e('nav-item')}>
+                  <BSNavLink
+                    id={`navItem-${name}-${index}`}
+                    className=""
+                    tag={NavLink}
+                    to={to}
+                    activeClassName="active"
+                    exact={exact}
+                  >
+                    <span className="">{name}</span>
+                  </BSNavLink>
+                </NavItem>
+              ))}
+            </Collapse>
+
+            <NavItem
+              className={bem.e('nav-item')}
+              onClick={this.handleClick('Land')}
+            >
+              <BSNavLink className={bem.e('nav-item-collapse')}>
+                <div className="d-flex">
+                  <MdBook className={bem.e('nav-item-icon')} />
+                  <span className="">Learning & Development</span>
+                </div>
+                <MdKeyboardArrowDown
+                  className={bem.e('nav-item-icon')}
+                  style={{
+                    padding: 0,
+                    transform: this.state.isOpenLand
+                      ? 'rotate(0deg)'
+                      : 'rotate(-90deg)',
+                    transitionDuration: '0.3s',
+                    transitionProperty: 'transform',
+                  }}
+                />
+              </BSNavLink>
+            </NavItem>
+            <Collapse isOpen={this.state.isOpenLand}>
+              {landPages.map(({ to, name, exact, Icon }, index) => (
+                <NavItem key={index} className={bem.e('nav-item')}>
+                  <BSNavLink
+                    id={`navItem-${name}-${index}`}
+                    className=""
+                    tag={NavLink}
+                    to={to}
+                    activeClassName="active"
+                    exact={exact}
+                  >
                     <span className="">{name}</span>
                   </BSNavLink>
                 </NavItem>

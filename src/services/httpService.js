@@ -9,6 +9,7 @@ axios.interceptors.response.use(null
 
   if (!expectedError) {
      alert("Could connect to the server")
+
   }
 
   return Promise.reject(error);

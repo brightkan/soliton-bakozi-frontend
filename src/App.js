@@ -1,16 +1,16 @@
-
 import GAListener from 'components/GAListener';
 import { EmptyLayout, LayoutRoute, MainLayout } from 'components/Layout';
 import PageSpinner from 'components/PageSpinner';
-import LoginPage from './pages/LoginPage';
 import React from 'react';
 import componentQueries from 'react-component-queries';
-import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './styles/reduction.scss';
 import Logout from './components/Logout';
+import ProtectedRoute from './components/Routes/ProtectedRoute';
+
+import LoginPage from './pages/LoginPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage'
 import PasswordResetPage from './pages/PasswordResetPage'
-
 
 const AlertPage = React.lazy(() => import('pages/AlertPage'));
 const AuthModalPage = React.lazy(() => import('pages/AuthModalPage'));
@@ -29,6 +29,8 @@ const TablePage = React.lazy(() => import('pages/TablePage'));
 const TypographyPage = React.lazy(() => import('pages/TypographyPage'));
 const WidgetPage = React.lazy(() => import('pages/WidgetPage'));
 
+
+
 const getBasename = () => {
   return `/${process.env.PUBLIC_URL.split('/').pop()}`;
 };
@@ -40,6 +42,7 @@ class App extends React.Component {
         <GAListener>
           <Switch>
             <Route exact path="/logout" component={Logout}/>
+
             <LayoutRoute
               exact
               path="/login"
@@ -68,29 +71,28 @@ class App extends React.Component {
 
             <MainLayout breakpoint={this.props.breakpoint}>
               <React.Suspense fallback={<PageSpinner />}>
-                <Route exact path="/" component={DashboardPage} />
-                <Route exact path="/login-modal" component={AuthModalPage} />
-                <Route exact path="/buttons" component={ButtonPage} />
-                <Route exact path="/cards" component={CardPage} />
-                <Route exact path="/widgets" component={WidgetPage} />
-                <Route exact path="/typography" component={TypographyPage} />
-                <Route exact path="/alerts" component={AlertPage} />
-                <Route exact path="/tables" component={TablePage} />
-                <Route exact path="/badges" component={BadgePage} />
-                <Route
+                <ProtectedRoute exact path="/" component={DashboardPage} />
+                <ProtectedRoute exact path="/login-modal" component={AuthModalPage} />
+                <ProtectedRoute exact path="/buttons" component={ButtonPage} />
+                <ProtectedRoute exact path="/cards" component={CardPage} />
+                <ProtectedRoute exact path="/widgets" component={WidgetPage} />
+                <ProtectedRoute exact path="/typography" component={TypographyPage} />
+                <ProtectedRoute exact path="/alerts" component={AlertPage} />
+                <ProtectedRoute exact path="/tables" component={TablePage} />
+                <ProtectedRoute exact path="/badges" component={BadgePage} />
+                <ProtectedRoute
                   exact
                   path="/button-groups"
                   component={ButtonGroupPage}
                 />
-                <Route exact path="/dropdowns" component={DropdownPage} />
-                <Route exact path="/progress" component={ProgressPage} />
-                <Route exact path="/modals" component={ModalPage} />
-                <Route exact path="/forms" component={FormPage} />
-                <Route exact path="/input-groups" component={InputGroupPage} />
-                <Route exact path="/charts" component={ChartPage} />
+                <ProtectedRoute exact path="/dropdowns" component={DropdownPage} />
+                <ProtectedRoute exact path="/progress" component={ProgressPage} />
+                <ProtectedRoute exact path="/modals" component={ModalPage} />
+                <ProtectedRoute exact path="/forms" component={FormPage} />
+                <ProtectedRoute exact path="/input-groups" component={InputGroupPage} />
+                <ProtectedRoute exact path="/charts" component={ChartPage} />
               </React.Suspense>
             </MainLayout>
-            <Redirect to="/" />
           </Switch>
         </GAListener>
       </BrowserRouter>

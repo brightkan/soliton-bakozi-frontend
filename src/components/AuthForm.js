@@ -9,6 +9,7 @@ import {Formik} from 'formik';
 import  * as Yup from 'yup'
 
 
+
 class AuthForm extends React.Component {
 
   state = {
@@ -52,7 +53,9 @@ class AuthForm extends React.Component {
     return (
       <Formik
         initialValues={{email:"",password:""}}
-        onSubmit={async (values,{setSubmitting}) =>{await this.doSubmit(values)}}
+        onSubmit={async (values,
+                         {setSubmitting}) =>
+        {await this.doSubmit(values)}}
         validationSchema={ Yup.object().shape({
           email: Yup.string().email("Must be a valid email")
             .required("Email is required")

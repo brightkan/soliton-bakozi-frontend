@@ -35,6 +35,12 @@ export function getCurrentUser() {
   }
 }
 
+export function isLoggedInfunc(){
+  return !!getCurrentUser()
+}
+
+export const isLoggedIn = isLoggedInfunc();
+
 export function getJwt() {
   return localStorage.getItem(tokenKey)
 }
@@ -42,5 +48,6 @@ export function getJwt() {
 export default {
   login,
   getCurrentUser,
-  logout
+  logout,
+  isLoggedIn
 }

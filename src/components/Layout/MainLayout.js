@@ -1,12 +1,8 @@
 import { Content, Footer, Header, Sidebar } from 'components/Layout';
 import React from 'react';
-import {
-  MdImportantDevices,
-  // MdCardGiftcard,
-  MdLoyalty,
-} from 'react-icons/md';
 import NotificationSystem from 'react-notification-system';
 import { NOTIFICATION_SYSTEM_STYLE } from 'utils/constants';
+import { isLoggedIn } from '../../services/authService';
 
 class MainLayout extends React.Component {
   static isSidebarOpen() {
@@ -15,7 +11,7 @@ class MainLayout extends React.Component {
       .classList.contains('cr-sidebar--open');
   }
 
-  componentWillReceiveProps({ breakpoint }) {
+  UNSAFE_componentWillReceiveProps({ breakpoint }) {
     if (breakpoint !== this.props.breakpoint) {
       this.checkBreakpoint(breakpoint);
     }
@@ -23,30 +19,10 @@ class MainLayout extends React.Component {
 
   componentDidMount() {
     this.checkBreakpoint(this.props.breakpoint);
-
-    setTimeout(() => {
-      if (!this.notificationSystem) {
-        return;
-      }
-
-      this.notificationSystem.addNotification({
-        title: <MdImportantDevices />,
-        message: 'Welcome to soliton Bakozi',
-        level: 'info',
-      });
-    }, 1500);
-
-    setTimeout(() => {
-      if (!this.notificationSystem) {
-        return;
-      }
-
-      this.notificationSystem.addNotification({
-        title: <MdLoyalty />,
-        message: 'Soliton Bakozi supports digital Human Resource operations',
-        level: 'info',
-      });
-    }, 2500);
+    if(!isLoggedIn){
+      window.location = "/login"
+    }
+  //  load data into redux store
   }
 
   // close sidebar when

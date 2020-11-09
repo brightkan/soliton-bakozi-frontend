@@ -1,9 +1,9 @@
 import * as types from './actionTypes';
 import { beginApiCall, apiCallError } from './apiStatusActions';
-import { getAllUsers } from '../../services/userService';
+import { getAllSolitonUsers } from '../../services/solitonUserService';
 
-export function loadUserSuccess(users) {
-  return { type: types.LOAD_USERS_SUCCESS, users };
+export function loadSolitonUserSuccess(solitonUsers) {
+  return { type: types.LOAD_SOLITON_USERS_SUCCESS, solitonUsers };
 }
 
 export function createUserSuccess(user) {
@@ -18,12 +18,12 @@ export function deleteUserOptimistic(user) {
   return { type: types.DELETE_USER_OPTIMISTIC, user };
 }
 
-export function loadUsers() {
+export function loadSolitonUsers() {
   return function(dispatch) {
     dispatch(beginApiCall());
-    return getAllUsers().then(res=>res.data)
-      .then(users => {
-        dispatch(loadUserSuccess(users));
+    return getAllSolitonUsers().then(res=>res.data)
+      .then(solitonUsers => {
+        dispatch(loadSolitonUserSuccess(solitonUsers));
       })
       .catch(error => {
         dispatch(apiCallError(error));
