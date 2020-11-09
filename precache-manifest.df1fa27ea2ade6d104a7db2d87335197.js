@@ -4,12 +4,12 @@ self.__precacheManifest = [
     "url": "https://brightkan.github.io/soliton-bakozi-frontend/static/js/0.96574bf7.chunk.js"
   },
   {
-    "revision": "4522e9b56e9a235bba6f",
+    "revision": "f769ad2242cd3188c6f3",
     "url": "https://brightkan.github.io/soliton-bakozi-frontend/static/css/main.7eaebf4d.chunk.css"
   },
   {
-    "revision": "4522e9b56e9a235bba6f",
-    "url": "https://brightkan.github.io/soliton-bakozi-frontend/static/js/main.53472b1b.chunk.js"
+    "revision": "f769ad2242cd3188c6f3",
+    "url": "https://brightkan.github.io/soliton-bakozi-frontend/static/js/main.a50425ab.chunk.js"
   },
   {
     "revision": "708fa515081adfb8965e",
@@ -140,7 +140,7 @@ self.__precacheManifest = [
     "url": "https://brightkan.github.io/soliton-bakozi-frontend/static/media/background_1920-19.22fc19f2.jpg"
   },
   {
-    "revision": "de1ef138ba926b3bf763f0bdb0a515a7",
+    "revision": "e6bc65f31a3680a906a6bb4881912bbe",
     "url": "https://brightkan.github.io/soliton-bakozi-frontend/index.html"
   }
 ];
